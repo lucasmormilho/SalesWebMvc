@@ -30,6 +30,10 @@ namespace SalesWebMvc.Services
         //metodo para inserir novo registro
         public void Insert(Seller obj)
         {
+            //pegar o primeiro departamento que existir
+            //para previnir um erro
+            obj.Department = _context.Department.First();
+            //adiciona na base de dados
             _context.Add(obj);
             _context.SaveChanges();
         }
