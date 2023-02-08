@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,14 @@ namespace SalesWebMvc.Controllers
         //------inicio obrigatorio
         //dependencia do sellerservice
         private readonly SellerService _sellerService;
+        //dependencia do departmentservie
+        private readonly DepartmentService _departmentService;
+
         //construtor
-        public SellersController(SellerService sellerService)
+        public SellersController(SellerService sellerService, DepartmentService departmentService)
         {
             _sellerService = sellerService;
+            _departmentService = departmentService;
         }
         //------fim obrigatorio
 
@@ -30,12 +35,15 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departments = _departmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments };
+            //passando a lista de departamentos para o index do seller
+            return View(viewModel);
         }
 
-        //anotação POST
+        //notação POST
         [HttpPost]
-        //anotação contra ataque
+        //notação contra ataque
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {

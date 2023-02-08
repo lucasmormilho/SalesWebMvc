@@ -32,7 +32,9 @@ namespace SalesWebMvc.Services
         {
             //pegar o primeiro departamento que existir
             //para previnir um erro
-            obj.Department = _context.Department.First();
+            //usado antes de obter o valor da view
+            //obj.Department = _context.Department.First();
+
             //adiciona na base de dados
             _context.Add(obj);
             _context.SaveChanges();
