@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Models;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,23 @@ namespace SalesWebMvc.Controllers
             //retorna da base de dados uma lista
             var list = _sellerService.findAll();
             return View(list);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //anotação POST
+        [HttpPost]
+        //anotação contra ataque
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            //usar nameof para se um dia mudar o nome do index
+            //não precisa mudar nada aqui
+            return RedirectToAction(nameof(Index));
         }
     }
 }
