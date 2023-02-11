@@ -53,6 +53,7 @@ namespace SalesWebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Tela de confirmação de delete GET
         public IActionResult Delete(int? id) //opcional
         {
             if (id == null)//tratamento caso id incorreto
@@ -67,6 +68,7 @@ namespace SalesWebMvc.Controllers
             return View(obj);
         }
 
+        //efetiva a confirmação
         //notação POST
         [HttpPost]
         //notação contra ataque
@@ -75,6 +77,21 @@ namespace SalesWebMvc.Controllers
         {
             _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        //Tela de confirmação de detalhes GET
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
         }
     }
 }
