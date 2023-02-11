@@ -1,0 +1,107 @@
+[33mcommit b928ea47aa1cc4d673077a26bbc4de43510f722b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Sat Feb 11 08:00:07 2023 -0300
+
+    Editar vendedor e exceções de serviço personalizadas
+
+[33mcommit 43e3db5d296fe91d0ec34c1ce108d0114e4a5899[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Sat Feb 11 07:02:39 2023 -0300
+
+    Tela de detalhes e eager loading
+
+[33mcommit 830daad40615202dc021a7c7980e6d5cd032e8d3[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Sat Feb 11 06:41:08 2023 -0300
+
+    Deletar vendedor
+
+[33mcommit dc0005b4a94d027ac1d9222200b1c7d2e905e841[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Wed Feb 8 07:54:18 2023 -0300
+
+    SellerFormViewModel e componente select para departamento
+
+[33mcommit 5968acfc33b1c165d3009c30474bed21b39f1415[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Wed Feb 8 07:27:05 2023 -0300
+
+    Chave estrangeira não nula (integridade referencial)
+
+[33mcommit 54c354e1c279dbeb5f3d24b049cd97583d488523[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Wed Feb 8 06:21:10 2023 -0300
+
+    Tela simples de cadastro
+
+[33mcommit 32c61be94bf018a2e47c9fe698a7c7926bfcb88c[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Tue Feb 7 06:24:11 2023 -0300
+
+    SellerService e FindAll síncrono
+
+[33mcommit e3d5c0ad338f9abdd1e25bab8406cc8d5e6959a6[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Mon Feb 6 06:27:42 2023 -0300
+
+    SellersController
+
+[33mcommit 74463e279f396a7c95824b4b88c39d31b401f3a2[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Mon Feb 6 06:13:31 2023 -0300
+
+    Seeding Service
+
+[33mcommit 891a798a90f6bff8d47ae37faedb0586e887c176[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Mon Jan 30 06:49:00 2023 -0300
+
+    Other entities and second migration
+
+[33mcommit 8db8f4ecfe50f1b79910e2d87bb24731c894f79e[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Sun Jan 29 08:06:07 2023 -0300
+
+    Mudando o tema do Bootstrap
+
+[33mcommit e0280d18604ba29fced0be04bb60de06f2978feb[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Sun Jan 29 07:41:28 2023 -0300
+
+    Adaptação para MySQL e primeira migration
+
+[33mcommit 24744f3057e0f34f8576a94167cf776d0b01db54[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Fri Jan 20 07:01:39 2023 -0300
+
+    CRUD scallfolding
+
+[33mcommit b98b3cb2d3331b7e98c8116519ad6e03b4978ed6[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Fri Jan 20 06:54:33 2023 -0300
+
+    Delete department para usar scafollding
+
+[33mcommit 9e7e7e5f49a07861546fbea1366a10e9d4a11e13[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Tue Jan 17 07:17:34 2023 -0300
+
+    First model controller view Department
+
+[33mcommit c489f41b72fa631fd14a94b759b3c05bbcb2ee7d[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Tue Jan 17 06:49:43 2023 -0300
+
+    First controller and razor pages tests
+
+[33mcommit f2f7e47fa1b8b651cfac2ce6cc28aaf6f7655471[m
+Author: lucasmormilho <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Wed Jan 4 18:40:07 2023 -0300
+
+    criação do projeto
+
+[33mcommit 09a409ff169df84b91ab854feb73d734342188a0[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Lucas Star <56029129+lucasmormilho@users.noreply.github.com>
+Date:   Wed Jan 4 18:29:04 2023 -0300
+
+    Initial commit
