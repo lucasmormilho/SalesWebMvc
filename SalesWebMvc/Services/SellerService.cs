@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Services
 {
@@ -54,6 +54,33 @@ namespace SalesWebMvc.Services
             var x = _context.Seller.Find(id);
             _context.Seller.Remove(x);
             _context.SaveChanges();
+        }
+
+        public void Update(Seller obj)
+        {
+            if (!_context.Seller.Any(y => y.Id == obj.Id)) //teste se não tem no banco de dados
+            {
+                throw new NotFoundException("Id not found");
+            }
+
+            //para tratar erro do banco de concorrencia
+            try
+            {
+                _context.Update(obj); //update do entity
+                _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e) //erro especifico do banco com entity
+            {
+                //lanço a excessão de acesso a banco a minha excessão personalizada
+                //pego uma excessão de nivel de acesso a dados
+                //e coloco a nivel de serviço
+                //isso é um tratamento de camada
+                //segregação de camadas é importante
+                //não é bom propagar uma excessão de acesso a dados
+                //é imporante lançar uma excessão personalizada
+                throw new DbConcurrencyException(e.Message); 
+            }
+
         }
     }
 }

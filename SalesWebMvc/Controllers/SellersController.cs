@@ -2,6 +2,7 @@
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
+using SalesWebMvc.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SalesWebMvc.Controllers
         }
         //------fim obrigatorio
 
+        //----------------------------------------------------------------------
 
         public IActionResult Index()
         {
@@ -33,6 +35,8 @@ namespace SalesWebMvc.Controllers
             return View(list);
         }
 
+        //----------------------------------------------------------------------
+
         public IActionResult Create()
         {
             var departments = _departmentService.FindAll();
@@ -40,6 +44,8 @@ namespace SalesWebMvc.Controllers
             //passando a lista de departamentos para o index do seller
             return View(viewModel);
         }
+
+        //----------------------------------------------------------------------
 
         //notação POST
         [HttpPost]
@@ -52,6 +58,8 @@ namespace SalesWebMvc.Controllers
             //não precisa mudar nada aqui
             return RedirectToAction(nameof(Index));
         }
+
+        //----------------------------------------------------------------------
 
         //Tela de confirmação de delete GET
         public IActionResult Delete(int? id) //opcional
@@ -68,6 +76,8 @@ namespace SalesWebMvc.Controllers
             return View(obj);
         }
 
+        //----------------------------------------------------------------------
+
         //efetiva a confirmação
         //notação POST
         [HttpPost]
@@ -78,6 +88,8 @@ namespace SalesWebMvc.Controllers
             _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
+
+        //----------------------------------------------------------------------
 
         //Tela de confirmação de detalhes GET
         public IActionResult Details(int? id)
@@ -93,5 +105,65 @@ namespace SalesWebMvc.Controllers
             }
             return View(obj);
         }
+
+        //----------------------------------------------------------------------
+
+        //tela de editar GET
+        public IActionResult Edit(int? id) //opcional só para evitar erro de execução
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            //Carregar departamentos na lista de departamentos
+            List<Department> departments = _departmentService.FindAll();
+            SellerFormViewModel viewModel = new SellerFormViewModel
+            {
+                Seller = obj, //preencher os campos com os dados do obj
+                Departments = departments //preencher caixa de seleção com os departamentos
+            };
+
+            return View(viewModel);
+        }
+
+        //----------------------------------------------------------------------
+
+        //efetiva a confirmação
+        //notação POST
+        [HttpPost]
+        //notação contra ataque
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Seller seller)
+        {
+            //verifica se o id é igual
+            if (id != seller.Id)
+            {
+                return BadRequest();
+            }
+            //verificar se não da erro
+            try
+            {
+                _sellerService.Update(seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException e) //não exibo o erro
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException e) //não exibo o erro
+            {
+                return BadRequest();
+            }
+            
+            
+        }
+
+        //----------------------------------------------------------------------
     }
 }
