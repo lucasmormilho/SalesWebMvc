@@ -28,19 +28,21 @@ namespace SalesWebMvc.Controllers
         //------fim obrigatorio
 
         //----------------------------------------------------------------------
-
-        public IActionResult Index()
+        
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task<IActionResult> Index()
         {
             //retorna da base de dados uma lista
-            var list = _sellerService.findAll();
+            var list = await _sellerService.findAllAsync();
             return View(list);
         }
 
         //----------------------------------------------------------------------
 
-        public IActionResult Create()
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task<IActionResult> Create()
         {
-            var departments = _departmentService.FindAll();
+            var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments };
             //passando a lista de departamentos para o index do seller
             return View(viewModel);
@@ -48,21 +50,22 @@ namespace SalesWebMvc.Controllers
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //notação POST
         [HttpPost]
         //notação contra ataque
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Seller seller)
+        public async Task<IActionResult> Create(Seller seller)
         {
             //tratamento para verificar se o javascript foi desabilitado
             //se for desabilitado não tera controle de envio de dados
             if (!ModelState.IsValid)
             {
-                var departments = _departmentService.FindAll();
+                var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
-            _sellerService.Insert(seller);
+            await _sellerService.InsertAsync(seller);
             //usar nameof para se um dia mudar o nome do index
             //não precisa mudar nada aqui
             return RedirectToAction(nameof(Index));
@@ -70,14 +73,15 @@ namespace SalesWebMvc.Controllers
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //Tela de confirmação de delete GET
-        public IActionResult Delete(int? id) //opcional
+        public async Task<IActionResult> Delete(int? id) //opcional
         {
             if (id == null)//tratamento caso id incorreto
             {
                 return RedirectToAction(nameof(Error), new { message = "Id null" });
             }
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -87,27 +91,29 @@ namespace SalesWebMvc.Controllers
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //efetiva a confirmação
         //notação POST
         [HttpPost]
         //notação contra ataque
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _sellerService.Remove(id);
+            await _sellerService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //Tela de confirmação de detalhes GET
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id null" });
             }
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -117,21 +123,22 @@ namespace SalesWebMvc.Controllers
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //tela de editar GET
-        public IActionResult Edit(int? id) //opcional só para evitar erro de execução
+        public async Task<IActionResult> Edit(int? id) //opcional só para evitar erro de execução
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id null" });
             }
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             //Carregar departamentos na lista de departamentos
-            List<Department> departments = _departmentService.FindAll();
+            List<Department> departments = await _departmentService.FindAllAsync();
             SellerFormViewModel viewModel = new SellerFormViewModel
             {
                 Seller = obj, //preencher os campos com os dados do obj
@@ -143,18 +150,19 @@ namespace SalesWebMvc.Controllers
 
         //----------------------------------------------------------------------
 
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         //efetiva a confirmação
         //notação POST
         [HttpPost]
         //notação contra ataque
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Seller seller)
+        public async Task<IActionResult> Edit(int id, Seller seller)
         {
             //tratamento para verificar se o javascript foi desabilitado
             //se for desabilitado não tera controle de envio de dados
             if (!ModelState.IsValid)
             {
-                var departments = _departmentService.FindAll();
+                var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
@@ -166,7 +174,7 @@ namespace SalesWebMvc.Controllers
             //verificar se não da erro
             try
             {
-                _sellerService.Update(seller);
+                await _sellerService.UpdateAsync(seller);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e) //upcasting de erros

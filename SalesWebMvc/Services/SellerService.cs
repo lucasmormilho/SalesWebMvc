@@ -24,13 +24,15 @@ namespace SalesWebMvc.Services
         //acessar minha fonte de dados
         //converte para uma lista
         //sincrona
-        public List<Seller> findAll()
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task<List<Seller>> findAllAsync()
         {
-            return _context.Seller.ToList();
+            return await _context.Seller.ToListAsync();
         }
 
         //metodo para inserir novo registro
-        public void Insert(Seller obj)
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task InsertAsync(Seller obj)
         {
             //pegar o primeiro departamento que existir
             //para previnir um erro
@@ -39,26 +41,31 @@ namespace SalesWebMvc.Services
 
             //adiciona na base de dados
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Seller FindById(int id)
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task<Seller> FindByIdAsync(int id)
         {
             //eager loading = carregar objetos associados ao principal - join
             //Para tela details é necessario fazer join (include) e trazer departamento
-            return _context.Seller.Include(x => x.Department).FirstOrDefault(x => x.Id == id);
+            return await _context.Seller.Include(x => x.Department).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Remove(int id)
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task RemoveAsync(int id)
         {
-            var x = _context.Seller.Find(id);
+            var x =  await _context.Seller.FindAsync(id);
             _context.Seller.Remove(x);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Seller obj)
+        //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
+        public async Task UpdateAsync(Seller obj)
         {
-            if (!_context.Seller.Any(y => y.Id == obj.Id)) //teste se não tem no banco de dados
+            bool hasAny = await _context.Seller.AnyAsync(y => y.Id == obj.Id);
+           
+            if (!hasAny) //teste se não tem no banco de dados
             {
                 throw new NotFoundException("Id not found");
             }
@@ -67,7 +74,7 @@ namespace SalesWebMvc.Services
             try
             {
                 _context.Update(obj); //update do entity
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException e) //erro especifico do banco com entity
             {
