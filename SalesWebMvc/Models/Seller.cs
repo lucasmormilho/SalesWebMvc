@@ -9,22 +9,30 @@ namespace SalesWebMvc.Models
     {
         //Atributos basicos
         public int Id { get; set; }
+
+        [Required(ErrorMessage ="{0} obrigatório")] //difinindo que o campo é obrigatorio
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} deve ter entre {2} e {1}")] //definido tamnaho personalizado
         public string Name { get; set; }
 
         //data anotation para modificar o elemento no html
         [DataType(DataType.EmailAddress)] //formatar campo email
+        [Required(ErrorMessage = "{0} obrigatório")] //difinindo que o campo é obrigatorio
+        [EmailAddress(ErrorMessage = "Entre com {0} válido")]
         public string Email { get; set; }
 
         //data anotation para modificar o elemento no html
         [Display(Name = "Data Nascimento")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "{0} obrigatório")] //difinindo que o campo é obrigatorio
         public DateTime Birthdate { get; set; }
 
         [Display(Name = "Salario Base")]
         [DisplayFormat(DataFormatString = "{0:F2}")] //formatar boleano
+        [Required(ErrorMessage = "{0} obrigatório")] //difinindo que o campo é obrigatorio
+        [Range(100.0, 50000.0, ErrorMessage = "{0} must be from {1} to {2}")]
         public double BaseSalary { get; set; }
-       
+
         //associação do vendedor com 1 departamento
         public Department Department { get; set; }
         //garantir que o Id do departamento tem que existir no entity

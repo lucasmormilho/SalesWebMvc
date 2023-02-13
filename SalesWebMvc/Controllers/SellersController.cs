@@ -54,6 +54,14 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            //tratamento para verificar se o javascript foi desabilitado
+            //se for desabilitado não tera controle de envio de dados
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(viewModel);
+            }
             _sellerService.Insert(seller);
             //usar nameof para se um dia mudar o nome do index
             //não precisa mudar nada aqui
@@ -142,6 +150,14 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            //tratamento para verificar se o javascript foi desabilitado
+            //se for desabilitado não tera controle de envio de dados
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(viewModel);
+            }
             //verifica se o id é igual
             if (id != seller.Id)
             {
@@ -164,8 +180,8 @@ namespace SalesWebMvc.Controllers
         //ação para retornar erros personalizados
         public IActionResult Error(string message)
         {
-            var viewModel = new ErrorViewModel 
-            { 
+            var viewModel = new ErrorViewModel
+            {
                 Message = message,
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier //macete para pegar o id interno da requisição
             };
