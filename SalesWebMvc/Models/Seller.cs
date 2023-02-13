@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace SalesWebMvc.Models
@@ -9,9 +10,21 @@ namespace SalesWebMvc.Models
         //Atributos basicos
         public int Id { get; set; }
         public string Name { get; set; }
+
+        //data anotation para modificar o elemento no html
+        [DataType(DataType.EmailAddress)] //formatar campo email
         public string Email { get; set; }
+
+        //data anotation para modificar o elemento no html
+        [Display(Name = "Data Nascimento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime Birthdate { get; set; }
+
+        [Display(Name = "Salario Base")]
+        [DisplayFormat(DataFormatString = "{0:F2}")] //formatar boleano
         public double BaseSalary { get; set; }
+       
         //associação do vendedor com 1 departamento
         public Department Department { get; set; }
         //garantir que o Id do departamento tem que existir no entity
@@ -36,7 +49,7 @@ namespace SalesWebMvc.Models
         }
 
         //Metodos customizados
-        
+
         //add vendas
         public void AddSales(SalesRecord sr)
         {
