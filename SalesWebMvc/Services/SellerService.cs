@@ -55,9 +55,20 @@ namespace SalesWebMvc.Services
         //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
         public async Task RemoveAsync(int id)
         {
-            var x =  await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(x);
-            await _context.SaveChangesAsync();
+            //colocar dentro de um bloco try 14/02
+            try
+            {
+                var x = await _context.Seller.FindAsync(id);
+                _context.Seller.Remove(x);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateException e)
+            {
+                //tratamento para enviar um erro personalizado
+                //erro ao deletar um vendedor com vendas
+                throw new IntegrityException("Erro, vendedor com vendas:" + e.Message);
+            }
+
         }
 
         //TRANFORMADO EM ASINCRONA EM 13/02/2023 (task, async, await)
